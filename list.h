@@ -306,19 +306,21 @@ void List<T>::insert_at(T val, uint index) {
 	}
 
 	q = new Node<T>(val);
-	    q->value = val;
 	    q->next = NULL;
 
-	    if(index==1){
+	    if(index==0){
 	        q->next=head;
 	        head=q;
+					size++;
+					return;
 	    }
 	    p = head;
-	    for(int i=0; i<index-2; i++){
+	    for(int i=0; i<index-1; i++){
 	        p=p->next;
 	    }
 	    q->next=p->next;
 	    p->next=q;
+			size++;
 	}
 
 // =================================================================
@@ -401,8 +403,12 @@ T List<T>::remove_at(uint index) {
 	T aux;
 	if(index==0) {
  		head=head->next;
- 		q->next=head;
+ 		q->next=NULL;
+		size--;
+		aux = q->value;
+		return aux;
  	}
+	else {
 		for(int i=0; i<index-1 ;i++) {
 			q=q->next;
 			temp1 = q->next;
@@ -411,7 +417,9 @@ T List<T>::remove_at(uint index) {
 		p =q->next;
 		q->next=q->next->next;
 		p->next=NULL;
+		size--;
 	return aux;
+}
 }
 // =================================================================
 // Returns the position of an item in the list.

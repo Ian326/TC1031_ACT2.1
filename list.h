@@ -246,7 +246,6 @@ T List<T>::get(uint index) const {
 			counter++;
 			aux = aux->next;
 		}
-		return aux;
 	}
 
 }
@@ -313,7 +312,6 @@ void List<T>::insert_at(T val, uint index) {
 	    if(index==1){
 	        q->next=head;
 	        head=q;
-	        return;
 	    }
 	    p = head;
 	    for(int i=0; i<index-2; i++){
@@ -394,19 +392,27 @@ T List<T>::pop_back() {
 // =================================================================
 template <class T>
 T List<T>::remove_at(uint index) {
-	 Node<T> *q = head, *p;
-	 T aux;
 
+	if (index >= size){
+		throw IndexOutOfBounds();
+	}
+
+	Node<T> *q = head, *p, *temp1;
+	T aux;
+	if(index==0) {
+ 		head=head->next;
+ 		q->next=head;
+ 	}
 		for(int i=0; i<index-1 ;i++) {
 			q=q->next;
-			aux = q;
+			temp1 = q->next;
+			aux = temp1->value;
 		}
 		p =q->next;
 		q->next=q->next->next;
 		p->next=NULL;
 	return aux;
 }
-
 // =================================================================
 // Returns the position of an item in the list.
 //
